@@ -45,12 +45,12 @@ export default function Footer() {
           </div>
 
           {/* Tech credits */}
-          <span
+          {/* <span
             className="font-mono-custom"
             style={{ fontSize: "0.72rem", color: "var(--text-dim)", textAlign: "center" }}
           >
             Built with Next.js · Tailwind CSS · Prisma · Framer Motion
-          </span>
+          </span> */}
 
           {/* Back to top */}
           <a

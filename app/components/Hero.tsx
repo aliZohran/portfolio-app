@@ -1,7 +1,8 @@
 "use client";
 
+import { Fragment } from "react";
 import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
-import { ArrowDown, Mail, ArrowUpRight } from "lucide-react";
+import { Mail, ArrowUpRight, ArrowDown, Download } from "lucide-react";
 import { heroStagger, heroItem } from "@/lib/animations";
 import Typewriter from "typewriter-effect";
 
@@ -22,37 +23,35 @@ export default function Hero() {
 
   return (
     <>
-      {/* Typewriter global styles */}
       <style>{`
-        .typewriter-wrapper .Typewriter {
-          display: inline;
-        }
+        /* ── Typewriter ── */
+        .typewriter-wrapper .Typewriter { display: inline; }
 
-        /* The typed text — gold gradient */
         .typewriter-wrapper .Typewriter__wrapper {
-          background: linear-gradient(90deg, var(--gold, #C9A84C), #f0d080, var(--gold, #C9A84C));
+          background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
           background-size: 200% auto;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
           animation: shimmer 3s linear infinite;
-          font-weight: 300;
+          font-weight: 900;
+          text-decoration: underline;
+          text-decoration-color: rgba(201, 168, 76, 0.35);
+          text-underline-offset: 8px;
+          text-decoration-thickness: 2px;
         }
 
-        /* Blinking cursor — glowing gold bar */
         .typewriter-wrapper .Typewriter__cursor {
           display: inline-block;
           width: 3px;
-          background: var(--gold, #C9A84C);
+          background: var(--gold);
           color: transparent;
           border-radius: 2px;
           margin-left: 6px;
           vertical-align: middle;
           position: relative;
-          top: -2px;
-          box-shadow:
-            0 0 6px rgba(201, 168, 76, 0.8),
-            0 0 14px rgba(201, 168, 76, 0.4);
+          top: -4px;
+          box-shadow: 0 0 8px rgba(201,168,76,0.7), 0 0 18px rgba(201,168,76,0.35);
           animation: cursorBlink 1s step-end infinite,
                      cursorPulse 2s ease-in-out infinite;
         }
@@ -61,38 +60,118 @@ export default function Hero() {
           0%   { background-position: 0% center; }
           100% { background-position: 200% center; }
         }
-
         @keyframes cursorBlink {
           0%, 100% { opacity: 1; }
           50%       { opacity: 0; }
         }
-
         @keyframes cursorPulse {
-          0%, 100% { box-shadow: 0 0 6px rgba(201,168,76,0.8), 0 0 14px rgba(201,168,76,0.4); }
-          50%       { box-shadow: 0 0 10px rgba(201,168,76,1),  0 0 24px rgba(201,168,76,0.6); }
+          0%, 100% { box-shadow: 0 0 8px rgba(201,168,76,0.7),  0 0 18px rgba(201,168,76,0.35); }
+          50%       { box-shadow: 0 0 12px rgba(201,168,76,1),   0 0 28px rgba(201,168,76,0.55); }
         }
 
-        /* Pill backdrop behind the entire typewriter line */
-        .typewriter-line {
+        /* ── Photo panel ── */
+        .hero-photo-panel {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 48%;
+          height: 100%;
+          overflow: hidden;
+        }
+        .hero-photo-panel img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: top center;
+          display: block;
+        }
+        .hero-photo-panel::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(to right, #080b12 0%, transparent 30%);
+          z-index: 1;
+          pointer-events: none;
+        }
+        /* subtle bottom fade */
+        .hero-photo-panel::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 35%;
+          background: linear-gradient(to top, #080b12 0%, transparent 100%);
+          z-index: 1;
+          pointer-events: none;
+        }
+
+        /* ── Primary button ── */
+        .btn-primary {
           display: inline-flex;
           align-items: center;
-          gap: 0;
-          padding: 6px 18px 6px 14px;
-          border-radius: 10px;
-          background: rgba(201, 168, 76, 0.05);
-          border: 1px solid rgba(201, 168, 76, 0.12);
-          backdrop-filter: blur(4px);
+          gap: 8px;
+          padding: 12px 24px;
+          background: var(--gold);
+          color: #080b12;
+          border-radius: 8px;
+          font-weight: 600;
+          font-size: 0.9rem;
+          text-decoration: none;
+          transition: background 0.2s, transform 0.15s;
+        }
+        .btn-primary:hover {
+          background: var(--gold-light);
+          transform: translateY(-2px);
         }
 
-        /* Static "role:" label before the typewriter */
-        .typewriter-label {
-          font-family: monospace;
-          font-size: 0.72em;
-          letter-spacing: 0.12em;
-          color: rgba(201, 168, 76, 0.55);
-          margin-right: 10px;
-          user-select: none;
-          text-transform: uppercase;
+        /* ── Secondary button ── */
+        .btn-secondary {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 12px 24px;
+          border: 1px solid var(--border-light);
+          color: var(--text);
+          background: transparent;
+          border-radius: 8px;
+          font-weight: 500;
+          font-size: 0.9rem;
+          text-decoration: none;
+          transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.15s;
+        }
+        .btn-secondary:hover {
+          border-color: var(--gold);
+          color: var(--gold-light);
+          background: var(--gold-dim);
+          transform: translateY(-2px);
+        }
+
+        /* ── Social link ── */
+        .social-link {
+          color: var(--text-dim);
+          font-size: 0.78rem;
+          text-decoration: none;
+          padding: 4px 8px;
+          border-radius: 6px;
+          transition: color 0.2s, background 0.2s;
+          font-family: 'DM Mono', monospace;
+        }
+        .social-link:hover {
+          color: var(--gold-light);
+          background: var(--gold-dim);
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+          .hero-photo-panel {
+            position: relative;
+            width: 100%;
+            height: 300px;
+          }
+          .hero-photo-panel::before {
+            background: linear-gradient(to bottom, #080b12 0%, transparent 35%);
+          }
         }
       `}</style>
 
@@ -106,19 +185,19 @@ export default function Hero() {
           alignItems: "center",
           position: "relative",
           overflow: "hidden",
+          background: "var(--bg)",
         }}
       >
-        {/* Ambient orbs */}
+        {/* Ambient orbs — gold + blue tinted, matching dark palette */}
         <motion.div
           style={{
             position: "absolute",
             width: 600,
             height: 600,
             top: "5%",
-            right: "-10%",
+            right: "15%",
             borderRadius: "50%",
-            background:
-              "radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%)",
             pointerEvents: "none",
             x: orb1X,
             y: orb1Y,
@@ -132,53 +211,56 @@ export default function Hero() {
             bottom: "0%",
             left: "-8%",
             borderRadius: "50%",
-            background:
-              "radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%)",
             pointerEvents: "none",
             x: orb2X,
             y: orb2Y,
           }}
         />
 
+        {/* Right-side photo panel */}
+        <div className="hero-photo-panel">
+          <img
+            src="/ali.png"
+            alt="Ali Mubarak"
+            onError={(e) => {
+              const el = e.currentTarget as HTMLImageElement;
+              el.style.display = "none";
+              const p = el.parentElement!;
+              p.style.background = "var(--bg-2)";
+              p.style.display = "flex";
+              p.style.alignItems = "center";
+              p.style.justifyContent = "center";
+              p.innerHTML += `<span style="font-family:'Playfair Display',serif;font-size:8rem;color:var(--border);z-index:2;position:relative;">AM</span>`;
+            }}
+          />
+        </div>
+
+        {/* Left content */}
         <div
           style={{
             maxWidth: "1152px",
             margin: "0 auto",
             padding: "120px 24px 80px",
             width: "100%",
+            position: "relative",
+            zIndex: 2,
           }}
         >
           <motion.div
             variants={heroStagger}
             initial="hidden"
             animate="visible"
-            style={{ maxWidth: "720px" }}
+            style={{ maxWidth: "580px" }}
           >
             {/* Badge */}
-            <motion.div
-              variants={heroItem}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-                marginBottom: "24px",
-              }}
-            >
+            <motion.div variants={heroItem} style={{ marginBottom: "28px" }}>
               <span
                 className="tag"
-                style={{ padding: "4px 12px", borderRadius: "999px" }}
+                style={{ padding: "5px 14px", borderRadius: "999px", fontSize: "0.75rem" }}
               >
-                Open to opportunities
+                Welcome to my portfolio
               </span>
-              <span
-                style={{
-                  width: "8px",
-                  height: "8px",
-                  borderRadius: "50%",
-                  background: "#22c55e",
-                  display: "inline-block",
-                }}
-              />
             </motion.div>
 
             {/* Greeting */}
@@ -189,188 +271,114 @@ export default function Hero() {
                 color: "var(--gold)",
                 fontSize: "0.85rem",
                 letterSpacing: "0.15em",
-                marginBottom: "12px",
+                marginBottom: "10px",
               }}
             >
-              Hello, I'm
+              Hi, I'm a
             </motion.p>
 
-            {/* Name */}
+            {/* Typewriter headline */}
             <motion.h1
               variants={heroItem}
               className="font-display"
               style={{
-                fontSize: "clamp(3rem, 8vw, 5.5rem)",
+                fontSize: "clamp(2.6rem, 7vw, 5rem)",
                 fontWeight: 900,
-                lineHeight: 1.05,
-                marginBottom: "16px",
+                lineHeight: 1.08,
+                color: "var(--text)",
+                marginBottom: "28px",
+                minHeight: "1.2em",
               }}
             >
-              <span style={{ color: "var(--text)" }}>Ali</span>
-              <br />
-              <span className="text-gold-gradient">Mubarak</span>
+              <span className="typewriter-wrapper">
+                <Typewriter
+                  options={{
+                    strings: [
+                      "Software Engineer",
+                      "Web Developer",
+                      "Full Stack Dev",
+                      "Tech Enthusiast",
+                    ],
+                    autoStart: true,
+                    loop: true,
+                    delay: 60,
+                    deleteSpeed: 35,
+                    cursor: "|",
+                  }}
+                />
+              </span>
             </motion.h1>
 
-            {/* ── Styled Typewriter Title ── */}
-            <motion.h2
-              variants={heroItem}
-              style={{
-                fontSize: "clamp(1.2rem, 3vw, 1.75rem)",
-                fontWeight: 300,
-                color: "var(--text-muted)",
-                marginBottom: "24px",
-                minHeight: "2.2em", // prevent layout shift while typing
-              }}
-            >
-              <span className="typewriter-line">
-                {/* <span className="typewriter-label">role:</span> */}
-                <span className="typewriter-wrapper">
-                  <Typewriter
-                    options={{
-                      strings: [
-                        "Software Engineer",
-                        "Web Developer",
-                        "Tech Enthusiast",
-                      ],
-                      autoStart: true,
-                      loop: true,
-                      delay: 60,
-                      deleteSpeed: 35,
-                      cursor: "|",
-                    }}
-                  />
-                </span>
-              </span>
-            </motion.h2>
-
-            {/* Bio */}
+            {/* Subtitle */}
             <motion.p
               variants={heroItem}
               style={{
-                fontSize: "1.05rem",
-                lineHeight: 1.75,
                 color: "var(--text-muted)",
-                maxWidth: "560px",
-                marginBottom: "40px",
+                fontSize: "1rem",
+                lineHeight: 1.75,
+                marginBottom: "36px",
+                maxWidth: "480px",
               }}
             >
-              I build modern, performant web applications with clean architecture
-              and great user experiences. Based in Kasur, Pakistan — working with
-              teams around the world.
+              Full Stack Developer | React Specialist | Problem Solver.
+              {/* I craft modern, scalable web applications with a focus on clean
+              code and exceptional user experiences. */}
             </motion.p>
 
-            {/* CTAs */}
+            {/* CTA buttons */}
             <motion.div
               variants={heroItem}
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "12px",
-                marginBottom: "40px",
-              }}
+              style={{ display: "flex", flexWrap: "wrap", gap: "12px", marginBottom: "40px" }}
             >
-              <a
-                href="#contact"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  padding: "12px 24px",
-                  background: "var(--gold)",
-                  color: "var(--bg)",
-                  borderRadius: "8px",
-                  fontWeight: 500,
-                  fontSize: "0.9rem",
-                  textDecoration: "none",
-                  transition: "background 0.2s",
-                }}
-                onMouseEnter={(e) =>
-                  ((e.currentTarget as HTMLElement).style.background =
-                    "var(--gold-light)")
-                }
-                onMouseLeave={(e) =>
-                  ((e.currentTarget as HTMLElement).style.background =
-                    "var(--gold)")
-                }
-              >
-                <Mail size={16} /> Get in touch
+              <a href="#projects" className="btn-primary">
+                View Projects <ArrowUpRight size={16} />
               </a>
-              <a
-                href="#projects"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  padding: "12px 24px",
-                  border: "1px solid var(--border-light)",
-                  color: "var(--text)",
-                  borderRadius: "8px",
-                  fontWeight: 500,
-                  fontSize: "0.9rem",
-                  textDecoration: "none",
-                  transition: "border-color 0.2s, color 0.2s",
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.borderColor =
-                    "var(--gold)";
-                  (e.currentTarget as HTMLElement).style.color = "var(--gold)";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.borderColor =
-                    "var(--border-light)";
-                  (e.currentTarget as HTMLElement).style.color = "var(--text)";
-                }}
-              >
-                View my work <ArrowUpRight size={16} />
+              <a href="#contact" className="btn-secondary">
+                <Download size={16} /> Download CV
               </a>
             </motion.div>
 
             {/* Social links */}
             <motion.div
               variants={heroItem}
-              style={{ display: "flex", alignItems: "center", gap: "20px" }}
+              style={{ display: "flex", alignItems: "center", gap: "6px", flexWrap: "wrap" }}
             >
+              <span
+                className="font-mono-custom"
+                style={{
+                  fontSize: "0.72rem",
+                  color: "var(--text-dim)",
+                  marginRight: "6px",
+                  letterSpacing: "0.08em",
+                }}
+              >
+                Connect with me:
+              </span>
               {[
-                {
-                  label: "GitHub",
-                  href: "https://github.com/alirazamehar732-hub",
-                },
+                { label: "GitHub",   href: "https://github.com/alirazamehar732-hub" },
                 { label: "LinkedIn", href: "https://linkedin.com/in/ali32" },
-                { label: "Email", href: "mailto:alirazamehar732@gmail.com" },
+                { label: "Email",    href: "mailto:alirazamehar732@gmail.com" },
               ].map(({ label, href }, i) => (
-                <>
+                <Fragment key={label}>
                   {i > 0 && (
                     <span
-                      key={`div-${i}`}
                       style={{
                         width: "1px",
                         height: "14px",
                         background: "var(--border)",
+                        display: "inline-block",
                       }}
                     />
                   )}
                   <a
-                    key={label}
                     href={href}
                     target={href.startsWith("mailto") ? undefined : "_blank"}
                     rel="noopener noreferrer"
-                    className="font-mono-custom"
-                    style={{
-                      color: "var(--text-dim)",
-                      fontSize: "0.8rem",
-                      textDecoration: "none",
-                      transition: "color 0.2s",
-                    }}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.color = "var(--gold)")
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.color = "var(--text-dim)")
-                    }
+                    className="social-link"
                   >
                     {label} ↗
                   </a>
-                </>
+                </Fragment>
               ))}
             </motion.div>
           </motion.div>
@@ -391,15 +399,12 @@ export default function Hero() {
             alignItems: "center",
             gap: "6px",
             color: "var(--text-dim)",
+            zIndex: 2,
           }}
         >
           <span
             className="font-mono-custom"
-            style={{
-              fontSize: "0.65rem",
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-            }}
+            style={{ fontSize: "0.65rem", letterSpacing: "0.2em", textTransform: "uppercase" }}
           >
             Scroll
           </span>

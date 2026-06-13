@@ -44,36 +44,13 @@ export default function Contact() {
           <div className="section-line" />
         </motion.div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "56px", alignItems: "start" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "56px", alignItems: "center" }}>
 
           {/* Left info */}
           <motion.div variants={fadeLeft} initial="hidden" animate={inView ? "visible" : "hidden"}>
-            <p style={{ fontSize: "0.95rem", lineHeight: 1.8, color: "var(--text-muted)", marginBottom: "36px" }}>
-              I'm always open to new opportunities, collaborations, or just a friendly chat
-              about technology. Send me a message and I'll get back to you within 24 hours.
-            </p>
+          
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "20px", marginBottom: "36px" }}>
-              {[
-                { icon: Mail,   label: "Email",    value: "alirazamehar732@gmail.com", href: "mailto:alirazamehar732@gmail.com" },
-                { icon: MapPin, label: "Location", value: "Kasur, Pakistan",           href: null },
-              ].map(({ icon: Icon, label, value, href }) => (
-                <div key={label} style={{ display: "flex", alignItems: "center", gap: "14px" }}>
-                  <div style={{ width: "40px", height: "40px", borderRadius: "10px", flexShrink: 0, background: "var(--bg-card)", border: "1px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <Icon size={16} color="var(--gold)" />
-                  </div>
-                  <div>
-                    <p style={{ fontSize: "0.7rem", color: "var(--text-dim)", marginBottom: "2px", textTransform: "uppercase", letterSpacing: "0.08em" }}>{label}</p>
-                    {href
-                      ? <a href={href} style={{ fontSize: "0.875rem", color: "var(--text-muted)", textDecoration: "none", transition: "color 0.2s" }}
-                           onMouseEnter={e => (e.currentTarget.style.color = "var(--gold)")}
-                           onMouseLeave={e => (e.currentTarget.style.color = "var(--text-muted)")}>{value}</a>
-                      : <p style={{ fontSize: "0.875rem", color: "var(--text-muted)" }}>{value}</p>
-                    }
-                  </div>
-                </div>
-              ))}
-            </div>
+        
 
             <div>
               <p className="font-mono-custom" style={{ fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--text-dim)", marginBottom: "12px" }}>

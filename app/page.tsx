@@ -45,9 +45,9 @@ export default function Home() {
 
         <Divider />
 
-        <section aria-label="Education">
+        {/* <section aria-label="Education">
           <Education />
-        </section>
+        </section> */}
 
         <Divider />
 
