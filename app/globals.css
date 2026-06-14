@@ -96,3 +96,10 @@ body {
     linear-gradient(90deg, rgba(30, 45, 64, 0.25) 1px, transparent 1px);
   background-size: 40px 40px;
 }
+
+/* Add this to your global layout CSS container */
+@media (min-width: 1024px) {
+  main, .page-container {
+    padding-left: 260px; /* Exactly matches the sidebar width */
+  }
+}

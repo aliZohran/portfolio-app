@@ -270,7 +270,7 @@ export default function Projects() {
       <section
         id="projects"
         ref={ref}
-        style={{ padding: "96px 0", background: "var(--bg)" }}
+        style={{ padding: "96px 0", background: "var(--bg-2)" }}
       >
         <div style={{ maxWidth: "1152px", margin: "0 auto", padding: "0 24px" }}>
 

@@ -349,7 +349,7 @@ export default function Skills() {
         }
       `}</style>
 
-      <section id="skills" ref={ref} style={{ padding: "96px 0", background: "var(--bg-2)" }}>
+      <section id="skills" ref={ref} style={{ padding: "96px 0", background: "var(--bg)" }}>
         <div style={{ maxWidth: "1152px", margin: "0 auto", padding: "0 24px" }}>
 
           {/* ── Header ── */}

@@ -58,11 +58,18 @@ export default function About() {
           border: 1px solid var(--border);
           border-radius: 14px;
           padding: 28px 22px;
-          transition: border-color 0.25s, transform 0.2s;
+          /* Smoothly transitions shadow alongside borders and position */
+          transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
         }
         .value-card:hover {
           border-color: var(--border-light);
-          transform: translateY(-3px);
+          /* Lifts the card and scales it up slightly */
+          transform: translateY(-5px) scale(1.02);
+          /* Sleek shadow depth with a hint of gold ambiance */
+          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25), 
+                      0 10px 10px -5px rgba(0, 0, 0, 0.15),
+                      0 0 15px 1px rgba(201, 168, 76, 0.05);
         }
         .value-icon-wrap {
           width: 52px;
