@@ -2,12 +2,10 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { ArrowUpRight, ExternalLink, Star } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { fadeUp, scaleIn, staggerContainer, viewport } from "@/lib/animations";
 
 import StackIcon from "tech-stack-icons";
-
-
 
 const projects = [
   {
@@ -16,10 +14,10 @@ const projects = [
     description: "A complete e-commerce solution with product management, cart, payments via Stripe, and an admin dashboard. Built with React, Node.js, and PostgreSQL.",
     tech:        ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "Stripe"],
     stars:       "48",
-    github:      "https://github.com/alirazamehar732-hub",
+    github:      "https://github.com/aliZohran/my-store",
     live:        "#",
     featured:    true,
-    image:       "https://images.unsplash.com/photo-1557821552-17105176677c?w=800&q=80",
+    image:       "/ease shop.png",
   },
   {
     name:        "TaskFlow",
@@ -38,10 +36,10 @@ const projects = [
     description: "A weather app with location search, 7-day forecasts, and animated icons using the OpenWeatherMap API.",
     tech:        ["React", "TypeScript", "REST API"],
     stars:       "19",
-    github:      "https://github.com/alirazamehar732-hub",
-    live:        "#",
+    github:      "https://github.com/aliZohran/weather-app",
+    live:        "https://weather-app-bice-omega-21.vercel.app/",
     featured:    true,
-    image:       "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&q=80",
+    image:       "/weather.png",
   },
   {
     name:        "BlogCMS",
@@ -49,10 +47,10 @@ const projects = [
     description: "A lightweight headless CMS with a markdown editor, image uploads, and a public API.",
     tech:        ["Next.js", "Prisma", "PostgreSQL", "S3"],
     stars:       "22",
-    github:      "https://github.com/alirazamehar732-hub",
-    live:        "#",
+    github:      "https://github.com/aliZohran/blog-app",
+    live:        "https://blog-app-theta-amber-95.vercel.app/",
     featured:    true,
-    image:       "https://images.unsplash.com/photo-1558346490-09402cb7d7fc?w=800&q=80",
+    image:       "/blog.jpg",
   },
 ];
 
@@ -152,7 +150,6 @@ export default function Projects() {
   const ref    = useRef(null);
   const inView = useInView(ref, viewport);
   const featured = projects.filter(p => p.featured);
-  // const rest     = projects.filter(p => !p.featured);
 
   return (
     <>
@@ -211,59 +208,20 @@ export default function Projects() {
           margin-bottom: 16px;
         }
 
-        @media (max-width: 700px) {
-          .projects-featured-grid { grid-template-columns: 1fr; }
-        }
-
-        .proj-rest-row {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          background: var(--bg-card);
-          border: 1px solid var(--border);
-          border-radius: 18px;
-          padding: 22px 26px;
-          text-decoration: none;
-          transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
-          gap: 18px;
-          box-shadow: 0 12px 30px rgba(0, 0, 0, 0.04);
-          width: 100%;
-        }
-        .proj-rest-row:hover {
-          border-color: rgba(201,168,76,0.35);
-          transform: translateY(-2px);
-          box-shadow: 0 18px 36px rgba(0, 0, 0, 0.08);
-        }
-        .proj-rest-tags {
-          display: flex;
-          gap: 8px;
-          flex-wrap: wrap;
-          margin-top: 8px;
-        }
-        .proj-rest-meta {
-          display: flex;
-          align-items: center;
-          gap: 14px;
-          flex-shrink: 0;
-        }
-        .proj-rest-meta a {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          width: 38px;
-          height: 38px;
-          border-radius: 12px;
-          transition: background 0.2s, color 0.2s;
-          color: var(--text-dim);
-        }
-        .proj-rest-meta a:hover {
-          background: rgba(201,168,76,0.08);
+        .github-view-more-link {
           color: var(--gold);
+          text-decoration: none;
+          font-weight: 500;
+          transition: color 0.2s, text-decoration 0.2s;
+        }
+        .github-view-more-link:hover {
+          color: var(--gold-light);
+          text-decoration: underline;
         }
 
-        @media (max-width: 540px) {
-          .proj-rest-row { flex-direction: column; align-items: stretch; }
-          .proj-rest-meta { align-self: stretch; justify-content: flex-start; }
+        @media (max-width: 768px) {
+          .projects-featured-grid { grid-template-columns: 1fr; gap: 20px; }
+          .proj-btn-primary, .proj-btn-secondary { padding: 12px 14px; font-size: 0.8rem; }
         }
       `}</style>
 
@@ -300,22 +258,11 @@ export default function Projects() {
               >
                 Projects
               </h2>
-              <a
-                href="https://github.com/alirazamehar732-hub"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-mono-custom"
-                style={{ fontSize: "0.78rem", color: "var(--text-muted)", textDecoration: "none", transition: "color 0.2s" }}
-                onMouseEnter={e => (e.currentTarget.style.color = "var(--gold)")}
-                onMouseLeave={e => (e.currentTarget.style.color = "var(--text-muted)")}
-              >
-                View all on GitHub ↗
-              </a>
             </div>
             <div className="section-line" />
           </motion.div>
 
-          {/* ── Featured cards with thumbnails ── */}
+          {/* ── Featured cards grid wrapper ── */}
           <motion.div
             className="projects-featured-grid"
             variants={staggerContainer(0.15)}
@@ -384,55 +331,28 @@ export default function Projects() {
             ))}
           </motion.div>
 
-          {/* ── Compact list rows ── */}
-          {/* <motion.div
-            variants={staggerContainer(0.1, 0.3)}
+          {/* ── View More Link in p Tag ── */}
+          <motion.p
+            variants={fadeUp}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
-            style={{ display: "flex", flexDirection: "column", gap: 10,  }}
+            className="font-mono-custom"
+            style={{
+              textAlign: "center",
+              marginTop: "40px",
+              fontSize: "0.9rem",
+              color: "var(--text-muted)",
+            }}
           >
-            {rest.map((p) => (
-              <motion.div
-                key={p.name}
-                variants={fadeUp}
-                className="proj-rest-row"
-              >
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-                    <span style={{ fontSize: "0.95rem", fontWeight: 500, color: "var(--text)" }}>{p.name}</span>
-                    <span style={{ fontSize: "0.78rem", color: "var(--gold)" }}>— {p.tagline}</span>
-                  </div>
-                  <div className="proj-rest-tags">
-                    {p.tech.map(t => (
-                      <span key={t} className="tag" style={{ padding: "2px 8px", borderRadius: 4, fontSize: "0.62rem" }}>{t}</span>
-                    ))}
-                  </div>
-                </div>
-                <div className="proj-rest-meta" style={{ display: "flex", alignItems: "center", gap: 14, flexShrink: 0 }}>
-                  <span
-                    className="font-mono-custom"
-                    style={{ display: "flex", alignItems: "center", gap: 4, fontSize: "0.75rem", color: "var(--text-muted)" }}
-                  >
-                    <Star size={11} /> {p.stars}
-                  </span>
-                  <a href={p.github} target="_blank" rel="noopener noreferrer"
-                    style={{ color: "var(--text-dim)", transition: "color 0.2s" }}
-                    onMouseEnter={e => (e.currentTarget.style.color = "var(--gold)")}
-                    onMouseLeave={e => (e.currentTarget.style.color = "var(--text-dim)")}
-                  >
-                    <StackIcon name="github" className="w-8 h-8 rounded" />
-                  </a>
-                  <a href={p.live} target="_blank" rel="noopener noreferrer"
-                    style={{ color: "var(--text-dim)", transition: "color 0.2s" }}
-                    onMouseEnter={e => (e.currentTarget.style.color = "var(--gold)")}
-                    onMouseLeave={e => (e.currentTarget.style.color = "var(--text-dim)")}
-                  >
-                    <ArrowUpRight size={15} />
-                  </a>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div> */}
+            <a
+              href="https://github.com/alizohran"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="github-view-more-link"
+            >
+              view more projects on github ↗
+            </a>
+          </motion.p>
 
         </div>
       </section>
