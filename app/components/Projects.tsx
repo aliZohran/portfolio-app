@@ -15,7 +15,7 @@ const projects = [
     tech:        ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "Stripe"],
     stars:       "48",
     github:      "https://github.com/aliZohran/my-store",
-    live:        "#",
+    live:        "https://my-store-psi.vercel.app/",
     featured:    true,
     image:       "/ease shop.png",
   },
